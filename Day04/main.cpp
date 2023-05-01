@@ -144,9 +144,9 @@ static std::string GetMD5String(std::string msg) {
 	return str;
 }
 
-bool validHash(std::string hash)
+bool validHash(std::string hash, int num0)
 {
-	for (int i{}; i != 5; i++)
+	for (int i{}; i != num0; i++)
 		if (hash[i] != '0') return false;
 	return true;
 }
@@ -164,10 +164,17 @@ int main()
 
 	int solution{};
 	for (int i{}; solution == 0; i++)
-		if (validHash(md5(key + std::to_string(i))))
+		if (validHash(md5(key + std::to_string(i)), 5))
 			solution = i;
 
 	std::cout << "Part 1: " << solution << "\n\n";
+
+	int solution2{};
+	for (int i{}; solution2 == 0; i++)
+		if (validHash(md5(key + std::to_string(i)), 6))
+			solution2 = i;
+
+	std::cout << "Part 2: " << solution2 << "\n\n";
 
 	return 0;
 }
