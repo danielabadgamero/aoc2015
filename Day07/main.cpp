@@ -9,17 +9,17 @@ struct Wire
 	std::string gate{};
 	Wire* A{};
 	Wire* B{};
-	int imm{};
+	unsigned short imm{};
 
 	bool operator==(const std::string& str) const
 	{
 		return str == id;
 	}
 
-	int in()
+	unsigned short in()
 	{
-		int inA{ A ? A->in() : imm };
-		int inB{ B ? B->in() : imm };
+		unsigned short inA{ A ? A->in() : imm };
+		unsigned short inB{ B ? B->in() : imm };
 		if (gate == "AND") return inA & inB;
 		if (gate == "OR") return inA | inB;
 		if (gate == "NOT") return ~inA;
@@ -70,7 +70,7 @@ int main()
 			if (std::find(gates, gates + 5, *arg) != gates + 5) continue;
 			try
 			{
-				int num{ std::stoi(*arg) };
+				unsigned short num{ static_cast<unsigned short>(std::stoi(*arg)) };
 				wire->imm = num;
 			}
 			catch (...)
@@ -84,7 +84,7 @@ int main()
 		}
 	}
 
-	std::vector<Wire>::iterator a{ std::find(circuit.begin(), circuit.end(), "a") };
+	std::vector<Wire>::iterator a{ std::find(circuit.begin(), circuit.end(), "i") };
 	std::cout << "Part 1: " << a->in() << "\n\n";
 
 	return 0;
