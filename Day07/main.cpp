@@ -2,6 +2,11 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
+
+struct Wire;
+
+std::map<Wire*, unsigned short> history{};
 
 struct Wire
 {
@@ -18,8 +23,18 @@ struct Wire
 
 	unsigned short in()
 	{
-		unsigned short inA{ A ? A->in() : imm };
-		unsigned short inB{ B ? B->in() : imm };
+		unsigned short inA{ imm };
+		unsigned short inB{ imm };
+		if (A)
+			if (history.contains(A))
+				inA = history[A];
+			else
+				inA = A->in();
+		if (B)
+			if (history.contains(B))
+				inB = history[B];
+			else
+				inB = B->in();
 		if (gate == "AND") return inA & inB;
 		if (gate == "OR") return inA | inB;
 		if (gate == "NOT") return ~inA;
@@ -84,7 +99,7 @@ int main()
 		}
 	}
 
-	std::vector<Wire>::iterator a{ std::find(circuit.begin(), circuit.end(), "i") };
+	std::vector<Wire>::iterator a{ std::find(circuit.begin(), circuit.end(), "a") };
 	std::cout << "Part 1: " << a->in() << "\n\n";
 
 	return 0;
