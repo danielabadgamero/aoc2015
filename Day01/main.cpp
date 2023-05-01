@@ -19,7 +19,7 @@ int main()
 	}
 
 	std::cout << "Part 1: " << floor << "\n\n";
-	std::cout << "Part 1: " << pos << "\n\n";
+	std::cout << "Part 2: " << pos << "\n\n";
 
 	return 0;
 }
